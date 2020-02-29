@@ -1,0 +1,13 @@
+import com.kuebiko.it.controller.model.ProductInsight;
+import com.kuebiko.it.persistence.model.Product;
+
+global com.kuebiko.it.controller.model.ProductInsight productInsight;
+dialect  "mvel"
+
+rule "Calculate order quantity - Scenario 1"
+    when
+        productInstance:Product(quantity < 100);
+    then
+        productInsight.setProduct(productInstance);
+        productInsight.setOrderQuantity(100 - productInstance.getQuantity());
+end
