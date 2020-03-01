@@ -31,7 +31,7 @@ public class ProductInsightService {
   }
 
   private boolean isOrderRequired(Product product) {
-    return PRIORITY_COUNT_MAP.get(product.getPriority()) > product.getQuantity();
+    return false;
   }
 
   private ProductInsight from(Product product) {

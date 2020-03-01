@@ -5,6 +5,7 @@ import com.kuebiko.it.controller.model.SaleDTO;
 import com.kuebiko.it.mapper.SaleDTOSaleMapper;
 import com.kuebiko.it.persistence.model.Product;
 import com.kuebiko.it.persistence.model.Sale;
+import com.kuebiko.it.persistence.model.SaleAggregate;
 import com.kuebiko.it.persistence.model.repository.SaleRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +50,9 @@ public class SaleService {
 
   public List<Sale> mostRecent50Sales() {
     return saleRepository.findTop50ByOrderByCreatedAtDesc();
+  }
+
+  public List<SaleAggregate> saleAggregates() {
+    return saleRepository.findProductSaleCount();
   }
 }

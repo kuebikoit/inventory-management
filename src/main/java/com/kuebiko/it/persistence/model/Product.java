@@ -49,9 +49,6 @@ public class Product implements Serializable {
   @NotNull
   private Category category;
 
-  @Enumerated(EnumType.STRING)
-  private Priority priority = Priority.LOW;
-
   @NotNull private BigDecimal costAmount;
 
   @NotNull private BigDecimal saleAmount;
@@ -66,8 +63,8 @@ public class Product implements Serializable {
 
   public double getProfitPercentage() {
     BigDecimal profitMargin =
-        saleAmount.subtract(costAmount).divide(costAmount, 2, RoundingMode.HALF_UP);
+        saleAmount.subtract(costAmount).divide(costAmount, 3, RoundingMode.HALF_UP);
 
-    return profitMargin.divide(ONE_HUNDRED).doubleValue();
+    return profitMargin.multiply(ONE_HUNDRED).doubleValue();
   }
 }
