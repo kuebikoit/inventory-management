@@ -6,14 +6,13 @@ import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.KieModule;
 import org.kie.api.runtime.KieContainer;
 import org.kie.internal.io.ResourceFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DroolsConfig {
   private static final String DRL_FILE = "rules/PRODUCT_INSIGHT_RULE.drl";
 
-  @Bean
+  // @Bean
   public KieContainer kieContainer() {
     KieServices kieServices = KieServices.Factory.get();
 

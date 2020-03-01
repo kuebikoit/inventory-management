@@ -38,4 +38,8 @@ public class ProductService {
         .findById(id)
         .orElseThrow(() -> new ProductNotFoundException(exceptionMessage));
   }
+
+  public Product save(Product product) {
+    return productRepository.save(product);
+  }
 }

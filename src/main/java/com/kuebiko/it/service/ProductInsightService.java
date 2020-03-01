@@ -1,10 +1,9 @@
 package com.kuebiko.it.service;
 
-import com.kuebiko.it.controller.model.ProductInsight;
 import com.kuebiko.it.persistence.model.Priority;
 import com.kuebiko.it.persistence.model.Product;
+import com.kuebiko.it.persistence.model.ProductInsight;
 import com.kuebiko.it.persistence.model.repository.ProductRepository;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,11 +35,12 @@ public class ProductInsightService {
   }
 
   private ProductInsight from(Product product) {
-    return ProductInsight.builder()
-        .product(product)
-        .orderQuantity(orderCountRequired(product.getPriority(), product.getQuantity()))
-        .suggestedOrderDate(Instant.now())
-        .build();
+    //    return ProductInsight.builder()
+    //        //.product(product)
+    //        .orderQuantity(orderCountRequired(product.getPriority(), product.getQuantity()))
+    //        .suggestedOrderDate(Instant.now())
+    //        .build();
+    return new ProductInsight();
   }
 
   private int orderCountRequired(Priority priority, int count) {

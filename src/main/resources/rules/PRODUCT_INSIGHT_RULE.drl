@@ -1,7 +1,7 @@
-import com.kuebiko.it.controller.model.ProductInsight;
+import com.kuebiko.it.persistence.model.ProductInsight;
 import com.kuebiko.it.persistence.model.Product;
 
-global com.kuebiko.it.controller.model.ProductInsight productInsight;
+global com.kuebiko.it.persistence.model.ProductInsight productInsight;
 dialect  "mvel"
 
 rule "Calculate order quantity - Scenario 1"

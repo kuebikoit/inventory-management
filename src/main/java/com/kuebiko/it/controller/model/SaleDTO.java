@@ -1,7 +1,6 @@
 package com.kuebiko.it.controller.model;
 
-import com.kuebiko.it.persistence.model.Product;
-import java.time.Instant;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -17,11 +16,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductInsight {
+public class SaleDTO {
 
-  private Product product;
+  private int id;
 
-  private int orderQuantity;
+  private String productId;
 
-  private Instant suggestedOrderDate;
+  private int quantity;
+
+  private UUID invoiceId;
 }

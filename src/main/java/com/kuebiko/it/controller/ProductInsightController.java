@@ -1,7 +1,7 @@
 package com.kuebiko.it.controller;
 
-import com.kuebiko.it.controller.model.ProductInsight;
 import com.kuebiko.it.persistence.model.Category;
+import com.kuebiko.it.persistence.model.ProductInsight;
 import com.kuebiko.it.service.ProductInsightRuleService;
 import com.kuebiko.it.service.ProductInsightService;
 import java.util.List;
