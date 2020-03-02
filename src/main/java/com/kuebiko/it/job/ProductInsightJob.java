@@ -1,11 +1,15 @@
 package com.kuebiko.it.job;
 
-import com.kuebiko.it.persistence.model.Priority;
+import static com.kuebiko.it.persistence.model.Product.ONE_HUNDRED;
+
 import com.kuebiko.it.persistence.model.Product;
 import com.kuebiko.it.persistence.model.ProductInsight;
 import com.kuebiko.it.persistence.model.SaleAggregate;
 import com.kuebiko.it.persistence.model.repository.ProductInsightRepository;
 import com.kuebiko.it.service.SaleService;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Instant;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -27,16 +31,30 @@ public class ProductInsightJob implements Job {
   public void execute(JobExecutionContext jobExecutionContext) {
     log.info("ProductInsightJob execution ...");
 
-    saleService.saleAggregates().stream().map(this::from).limit(10).collect(Collectors.toList());
+    saleService
+        .saleAggregates(Instant.now().minusSeconds(30))
+        .stream()
+        .map(this::from)
+        .limit(10)
+        .collect(Collectors.toList());
   }
 
   private ProductInsight from(SaleAggregate saleAggregate) {
     Product product = saleAggregate.getProduct();
     log.info("product id={}, profit={}", product.getId(), product.getProfitPercentage());
 
-    ProductInsight productInsight = getOrDefault(product.getId(), ProductInsight::new);
-    productInsight.setOrderQuantity(100 - product.getQuantity());
-    productInsight.setPriority(priority(saleAggregate.getCount()));
+    BigDecimal avgPrice = BigDecimal.valueOf(saleAggregate.getAveragePricePerUnit());
+    double profitPercent = profitPercentage(product.getCostAmount(), avgPrice);
+
+    ProductInsight productInsight =
+        new ProductInsight()
+            .setProductId(product.getId())
+            .setProductName(product.getName())
+            .setAverageSaleAmount(avgPrice)
+            .setProfitPercentage(profitPercent)
+            .setTotalProfitAmount(
+                totalProfit(product.getCostAmount(), avgPrice, saleAggregate.getTotalQuantity()));
+
     productInsightRepository.save(productInsight);
 
     return productInsight;
@@ -49,8 +67,14 @@ public class ProductInsightJob implements Job {
         .orElse(productInsightSupplier.get().setProductId(productId));
   }
 
-  private Priority priority(long count) {
-    if (count > 2) return Priority.HIGH;
-    else return Priority.MEDIUM;
+  private double profitPercentage(BigDecimal costAmount, BigDecimal saleAmount) {
+    BigDecimal profitMargin =
+        saleAmount.subtract(costAmount).divide(costAmount, 3, RoundingMode.HALF_UP);
+
+    return profitMargin.multiply(ONE_HUNDRED).doubleValue();
+  }
+
+  private BigDecimal totalProfit(BigDecimal costAmount, BigDecimal saleAmount, long quantity) {
+    return saleAmount.subtract(costAmount).multiply(BigDecimal.valueOf(quantity));
   }
 }

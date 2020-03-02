@@ -1,9 +1,8 @@
 package com.kuebiko.it.persistence.model;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,14 +30,15 @@ public class ProductInsight {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private int orderQuantity;
+  private double profitPercentage;
 
-  @Enumerated(EnumType.STRING)
-  private Priority priority = Priority.LOW;
+  private BigDecimal averageSaleAmount;
 
-  private Instant suggestedOrderDate;
+  private BigDecimal totalProfitAmount;
 
   @NotNull private Long productId;
+
+  private String productName;
 
   @UpdateTimestamp private Instant updatedAt;
 }

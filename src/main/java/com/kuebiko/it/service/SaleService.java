@@ -7,6 +7,7 @@ import com.kuebiko.it.persistence.model.Product;
 import com.kuebiko.it.persistence.model.Sale;
 import com.kuebiko.it.persistence.model.SaleAggregate;
 import com.kuebiko.it.persistence.model.repository.SaleRepository;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class SaleService {
     return saleRepository.findTop50ByOrderByCreatedAtDesc();
   }
 
-  public List<SaleAggregate> saleAggregates() {
-    return saleRepository.findProductSaleCount();
+  public List<SaleAggregate> saleAggregates(Instant createdAfter) {
+    return saleRepository.findProductSaleCount(createdAfter);
   }
 }

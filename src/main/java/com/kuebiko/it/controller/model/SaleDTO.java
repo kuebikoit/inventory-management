@@ -1,5 +1,6 @@
 package com.kuebiko.it.controller.model;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,8 @@ public class SaleDTO {
   private String productId;
 
   private int quantity;
+
+  private BigDecimal pricePerUnit;
 
   private UUID invoiceId;
 }

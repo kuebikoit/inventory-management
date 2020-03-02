@@ -19,5 +19,9 @@ public class SaleAggregate {
 
   private Product product;
 
-  private long count;
+  private long totalCount;
+
+  private long totalQuantity;
+
+  private double averagePricePerUnit;
 }
